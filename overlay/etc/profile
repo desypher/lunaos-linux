@@ -1,0 +1,10 @@
+# Auto-start GUI on tty1 login
+if [ "$(tty)" = "/dev/tty1" ]; then
+  # Try to run startx (X11)
+  if command -v startx >/dev/null 2>&1; then
+    exec startx
+  # Or run weston (Wayland) if startx is not found
+  elif command -v weston >/dev/null 2>&1; then
+    exec weston
+  fi
+fi

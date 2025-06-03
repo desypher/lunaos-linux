@@ -1,0 +1,5 @@
+<RCC>
+  <qresource prefix="/text">
+    <file>TextEditor.qml</file>
+  </qresource>
+</RCC>

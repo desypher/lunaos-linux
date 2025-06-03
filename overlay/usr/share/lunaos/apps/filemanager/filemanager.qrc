@@ -1,0 +1,5 @@
+<RCC>
+  <qresource prefix="/filemanager">
+    <file>FileManager.qml</file>
+  </qresource>
+</RCC>

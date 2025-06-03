@@ -1,0 +1,5 @@
+<RCC>
+  <qresource prefix="/system">
+    <file>PowerMenu.qml</file>
+  </qresource>
+</RCC>

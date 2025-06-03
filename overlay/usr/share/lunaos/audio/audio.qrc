@@ -1,0 +1,9 @@
+<RCC version="1.0">
+    <qresource prefix="/audio">
+        <file>device-connect.wav</file>
+        <file>error.wav</file>
+        <file>device-disconnect.wav</file>
+        <file>boot.wav</file>
+        <file>device.wav</file>
+    </qresource>
+</RCC>

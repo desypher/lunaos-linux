@@ -1,0 +1,5 @@
+<RCC>
+  <qresource prefix="/terminal">
+    <file>TerminalApp.qml</file>
+  </qresource>
+</RCC>
