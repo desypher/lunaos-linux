@@ -34,6 +34,7 @@ set(SOURCES
     apps/texteditor/texteditor.qrc
     apps/texteditor/TextEditorBackend.cpp
     apps/texteditor/TextEditorBackend.h
+    apps/browser/browser.qrc
 )
 
 # Add the main executable

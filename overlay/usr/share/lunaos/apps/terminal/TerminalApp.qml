@@ -280,55 +280,70 @@ Rectangle {
             }
         }
 
-        TextArea {
-            id: input
+        RowLayout {
             width: parent.width
             height: 32
-            color: "#cdd6f4"
-            selectionColor: "#f9e2af"
-            font.family: "monospace"
-            font.pixelSize: 14
-            leftPadding: 12
-            rightPadding: 12
-            placeholderText: "Enter command..."
-            placeholderTextColor: "#6c7086"
-            
-            background: Rectangle {
-                color: "#1e1e2e"
-                radius: 6
-                border.color: "#313244"
-                border.width: 1
+            spacing: 4
 
-                Rectangle {
-                    width: parent.width
-                    height: 1
-                    color: "#313244"
-                    anchors.bottom: parent.bottom
-                }
+            Text {
+                text: ">"
+                color: "#f9e2af"
+                font.family: "monospace"
+                font.pixelSize: 14
+                Layout.leftMargin: 8
+                Layout.alignment: Qt.AlignVCenter
             }
 
-            Keys.onReturnPressed: {
-                if (text.trim() !== "") {
-                    backend.sendCommand(text)
-                    addToHistory(text.trim())
-                    text = ""
-                }
-            }
+            TextArea {
+                id: input
+                width: parent.width
+                height: 32
+                color: "#cdd6f4"
+                selectionColor: "#f9e2af"
+                font.family: "monospace"
+                font.pixelSize: 14
+                leftPadding: 12
+                rightPadding: 12
+                placeholderText: "Enter command..."
+                placeholderTextColor: "#6c7086"
+                
+                background: Rectangle {
+                    color: "#1e1e2e"
+                    radius: 6
+                    border.color: "#313244"
+                    border.width: 1
 
-            Keys.onUpPressed: {
-                if (currentHistoryIndex > 0) {
-                    currentHistoryIndex--
-                    text = commandHistory[currentHistoryIndex]
+                    Rectangle {
+                        width: parent.width
+                        height: 1
+                        color: "#313244"
+                        anchors.bottom: parent.bottom
+                    }
                 }
-            }
 
-            Keys.onDownPressed: {
-                if (currentHistoryIndex < commandHistory.length - 1) {
-                    currentHistoryIndex++
-                    text = commandHistory[currentHistoryIndex]
-                } else {
-                    currentHistoryIndex = commandHistory.length
-                    text = ""
+                Keys.onReturnPressed: {
+                    if (text.trim() !== "") {
+                        backend.sendCommand(text)
+                        addToHistory(text.trim())
+                        text = ""
+                    }
+                }
+
+                Keys.onUpPressed: {
+                    if (currentHistoryIndex > 0) {
+                        currentHistoryIndex--
+                        text = commandHistory[currentHistoryIndex]
+                    }
+                }
+
+                Keys.onDownPressed: {
+                    if (currentHistoryIndex < commandHistory.length - 1) {
+                        currentHistoryIndex++
+                        text = commandHistory[currentHistoryIndex]
+                    } else {
+                        currentHistoryIndex = commandHistory.length
+                        text = ""
+                    }
                 }
             }
         }
