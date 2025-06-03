@@ -13,10 +13,21 @@ Rectangle {
     border.width: 1
     visible: true
     
+    signal closed()
 
     property bool isMaximized: false
     property bool isMinimized: false
     property rect restoreGeometry: Qt.rect(x, y, width, height)
+    property string windowTitle: "File Manager"  // Add this property
+    
+    MouseArea {
+        id: windowMouseArea
+        anchors.fill: parent
+        z: -1
+        onPressed: {
+            terminal.parent.parent.bringToFront(windowTitle)
+        }
+    }
 
     FileManagerBackend {
         id: backend
@@ -51,6 +62,7 @@ Rectangle {
                 verticalCenter: parent.verticalCenter
             }
             spacing: 8
+            z: 2
 
             Repeater {
                 model: [
@@ -64,11 +76,16 @@ Rectangle {
                     height: 12
                     radius: 6
                     color: modelData.color
+                    opacity: controlMouseArea.containsMouse ? 0.8 : 1.0
+
+                    Behavior on opacity {
+                        NumberAnimation { duration: 150 }
+                    }
 
                     MouseArea {
                         anchors.fill: parent
                         onClicked: {
-                            if (modelData.action === "close") fileManager.destroy()
+                            if (modelData.action === "close") fileManager.closed()
                             else if (modelData.action === "minimize") fileManager.showMinimized()
                             else if (modelData.action === "maximize") fileManager.toggleMaximize()
                         }
@@ -79,13 +96,21 @@ Rectangle {
 
         // Drag Area
         MouseArea {
+            id: controlMouseArea
             anchors.fill: parent
+            hoverEnabled: true
+            z: 1
             property point clickPos: "0,0"
-            onPressed: clickPos = Qt.point(mouse.x, mouse.y)
+            onPressed: {
+                clickPos = Qt.point(mouse.x, mouse.y)
+                fileManager.parent.parent.bringToFront("File Manager")  // Add this line
+            }
             onPositionChanged: {
-                var delta = Qt.point(mouse.x - clickPos.x, mouse.y - clickPos.y)
-                fileManager.x += delta.x
-                fileManager.y += delta.y
+                if (pressed) {
+                    var delta = Qt.point(mouse.x - clickPos.x, mouse.y - clickPos.y)
+                    fileManager.x += delta.x
+                    fileManager.y += delta.y
+                }
             }
         }
     }

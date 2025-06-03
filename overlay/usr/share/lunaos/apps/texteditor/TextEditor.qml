@@ -2,28 +2,48 @@ import QtQuick 2.15
 import QtQuick.Controls 2.15
 import QtQuick.Layouts 1.15
 import QtQuick.Dialogs 1.3
-import QtQuick.Window 2.15
 
-Window {
+Rectangle {
     id: textEditor
-    visible: true
     width: 800
     height: 600
-    title: (backend.currentFile || "Untitled") + (backend.modified ? "*" : "") + " - Text Editor"
+    color: "#1e1e2e"
+    radius: 8
+    border.color: "#89b4fa"
+    border.width: 1
+    visible: true
 
+    property bool isMaximized: false
     property bool isMinimized: false
-    signal closed()
+    property rect restoreGeometry: Qt.rect(x, y, width, height)
 
-    onClosing: function(close) {
-        close.accepted = false
-        closed()
+    property string windowTitle: "Text Editor"  // Add this property
+    
+    MouseArea {
+        id: windowMouseArea
+        anchors.fill: parent
+        z: -1
+        onPressed: {
+            terminal.parent.parent.bringToFront(windowTitle)
+        }
     }
 
-    function restore() {
-        textEditor.show()
-        textEditor.raise()
-        textEditor.requestActivate()
-        isMinimized = false
+    signal closed()
+
+    function toggleMaximize() {
+        if (isMaximized) {
+            x = restoreGeometry.x
+            y = restoreGeometry.y
+            width = restoreGeometry.width
+            height = restoreGeometry.height
+        } else {
+            restoreGeometry = Qt.rect(x, y, width, height)
+            x = 0
+            y = 0
+            width = parent.width
+            height = parent.height
+        }
+        isMaximized = !isMaximized
     }
 
     FileDialog {
@@ -50,8 +70,88 @@ Window {
         anchors.fill: parent
         spacing: 0
 
+        // Title Bar
+        Rectangle {
+            id: titleBar
+            height: 32
+            color: "#181825"
+            radius: 8
+            Layout.fillWidth: true
+
+            // Window Title
+            Text {
+                text: (backend.currentFile || "Untitled") + (backend.modified ? "*" : "") + " - Text Editor"
+                color: "#cdd6f4"
+                font.pixelSize: 12
+                anchors.centerIn: parent
+            }
+
+            // Window Controls
+            Row {
+                anchors {
+                    right: parent.right
+                    rightMargin: 8
+                    verticalCenter: parent.verticalCenter
+                }
+                spacing: 8
+                z: 2
+
+                Repeater {
+                    model: [
+                        { color: "#f9e2af", action: "minimize" },
+                        { color: "#a6e3a1", action: "maximize" },
+                        { color: "#f38ba8", action: "close" }
+                    ]
+
+                    Rectangle {
+                        width: 12
+                        height: 12
+                        radius: 6
+                        color: modelData.color
+                        opacity: controlMouseArea.containsMouse ? 0.8 : 1.0
+
+                        Behavior on opacity {
+                            NumberAnimation { duration: 150 }
+                        }
+
+                        MouseArea {
+                            anchors.fill: parent
+                            onClicked: {
+                                if (modelData.action === "close") textEditor.closed()
+                                else if (modelData.action === "minimize") textEditor.isMinimized = true
+                                else if (modelData.action === "maximize") textEditor.toggleMaximize()
+                            }
+                        }
+                    }
+                }
+            }
+
+            // Drag Area
+            MouseArea {
+                id: controlMouseArea
+                anchors.fill: parent
+                hoverEnabled: true
+                z: 1
+                property point clickPos: "0,0"
+                onPressed: {
+                    clickPos = Qt.point(mouse.x, mouse.y)
+                    textEditor.parent.parent.bringToFront("Text Editor")  // Add this line
+                }
+                onPositionChanged: {
+                    if (pressed) {
+                        var delta = Qt.point(mouse.x - clickPos.x, mouse.y - clickPos.y)
+                        textEditor.x += delta.x
+                        textEditor.y += delta.y
+                    }
+                }
+            }
+        }
+
         ToolBar {
             Layout.fillWidth: true
+            background: Rectangle {
+                color: "#313244"
+            }
             RowLayout {
                 ToolButton {
                     text: "New"
@@ -83,13 +183,14 @@ Window {
                 wrapMode: TextEdit.WrapAtWordBoundaryOrAnywhere
                 selectByMouse: true
                 persistentSelection: true
+                colr: "#e0e0e0"  // Light gray text
             }
         }
 
         Rectangle {
             Layout.fillWidth: true
             height: 30
-            color: "#f0f0f0"  // Light gray background
+            color: "#313244"
             
             Label {
                 anchors.left: parent.left

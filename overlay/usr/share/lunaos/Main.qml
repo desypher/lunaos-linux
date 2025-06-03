@@ -14,6 +14,16 @@ ApplicationWindow {
 
     property var contextMenu: null
 
+    screen: Qt.application.screens[0]
+
+    Connections {
+        target: Qt.application
+        function onScreenAdded(screen) {
+            root.width = screen.width
+            root.height = screen.height
+        }
+    }
+
     Loader {
         id: pageLoader
         anchors.fill: parent

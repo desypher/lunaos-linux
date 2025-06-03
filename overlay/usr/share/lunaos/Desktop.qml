@@ -17,6 +17,24 @@ Item {
     property var currentTime: new Date()
     property var activeWindows: ({})  // Add this near the top with other properties
     property var runningApps: [] // Add this near other properties
+    property int topZIndex: 1000
+    property var windowZOrder: ({})  // Add this with other properties at the top
+
+    function bringToFront(windowName) {
+        topZIndex++
+        windowZOrder[windowName] = topZIndex
+        
+        // Update z values for all windows
+        if (terminalLoader.active) {
+            terminalLoader.item.z = windowZOrder["Terminal"] || 0
+        }
+        if (fileManagerLoader.active) {
+            fileManagerLoader.item.z = windowZOrder["File Manager"] || 0
+        }
+        if (textEditorLoader.active) {
+            textEditorLoader.item.z = windowZOrder["Text Editor"] || 0
+        }
+    }
 
     Loader {
         id: terminalLoader
@@ -378,6 +396,7 @@ Item {
                                     terminalLoader.item.visible = !terminalLoader.item.visible
                                 }
                             }
+                            bringToFront("Terminal")
                         } else if (modelData === "File Manager") {
                             if (!fileManagerLoader.active) {
                                 fileManagerLoader.active = true
@@ -387,8 +406,9 @@ Item {
                                 } else {
                                     fileManagerLoader.item.visible = !fileManagerLoader.item.visible
                                 }
-                            } 
-                        } else if( modelData === "Text Editor") {
+                            }
+                            bringToFront("File Manager")
+                        } else if (modelData === "Text Editor") {
                             if (!textEditorLoader.active) {
                                 textEditorLoader.active = true
                             } else {
@@ -398,8 +418,7 @@ Item {
                                     textEditorLoader.item.visible = !textEditorLoader.item.visible
                                 }
                             }
-                        } else {
-                            console.log("Opening " + modelData)
+                            bringToFront("Text Editor")
                         }
                     }
                 }

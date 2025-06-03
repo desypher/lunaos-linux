@@ -22,13 +22,24 @@ Rectangle {
     property bool isMinimized: false
     property rect restoreGeometry: Qt.rect(x, y, width, height)
 
+    property string windowTitle: "Terminal"  // Add this property
+    
+    MouseArea {
+        id: windowMouseArea
+        anchors.fill: parent
+        z: -1
+        onPressed: {
+            terminal.parent.parent.bringToFront(windowTitle)
+        }
+    }
+
     signal closed()
 
     TerminalBackend {
         id: backend
         onOutputChanged: {
             // Add line break handling and wrap in pre tags for proper formatting
-            terminalOutput += "> <pre>" + output.replace(/\n/g, "<br>") + "</pre>"
+            terminalOutput += "<pre>> " + output.replace(/\n/g, "<br>") + "</pre>"
             // Scroll to bottom when new output is added
             outputArea.cursorPosition = outputArea.length
         }
@@ -164,115 +175,75 @@ Rectangle {
         anchors.margins: 10
         spacing: 10
 
-        // Enhanced title bar
+        // Replace existing title bar with standardized one
         Rectangle {
+            id: titleBar
             width: parent.width
             height: 32
-            color: "#11111b"
-            radius: 6
-            
+            color: "#181825"
+            radius: 8
+
+            Text {
+                text: "Terminal"
+                color: "#cdd6f4"
+                font.pixelSize: 12
+                anchors.centerIn: parent
+            }
+
             Row {
-                anchors.fill: parent
-                anchors.margins: 8
+                anchors {
+                    right: parent.right
+                    rightMargin: 8
+                    verticalCenter: parent.verticalCenter
+                }
                 spacing: 8
+                z: 2
 
-                Text {
-                    text: "Terminal"
-                    color: "#f9e2af"
-                    font.pixelSize: 14
-                    font.bold: true
-                    anchors.verticalCenter: parent.verticalCenter
-                }
+                Repeater {
+                    model: [
+                        { color: "#f9e2af", action: "minimize" },
+                        { color: "#a6e3a1", action: "maximize" },
+                        { color: "#f38ba8", action: "close" }
+                    ]
 
-                // Add draggable area
-                Rectangle {
-                    width: parent.width - 150
-                    height: parent.height - 16
-                    color: "transparent"
-                    
-                    MouseArea {
-                        anchors.fill: parent
-                        drag.target: terminal
-                        drag.axis: Drag.XAndY
-                        drag.minimumX: 0
-                        drag.minimumY: 0
-                        drag.maximumX: parent.parent ? parent.parent.width - terminal.width : 0
-                        drag.maximumY: parent.parent ? parent.parent.height - terminal.height : 0
+                    Rectangle {
+                        width: 12
+                        height: 12
+                        radius: 6
+                        color: modelData.color
+                        opacity: controlMouseArea.containsMouse ? 0.8 : 1.0
+
+                        Behavior on opacity {
+                            NumberAnimation { duration: 150 }
+                        }
+
+                        MouseArea {
+                            anchors.fill: parent
+                            onClicked: {
+                                if (modelData.action === "close") terminal.closed()
+                                else if (modelData.action === "minimize") terminal.minimize()
+                                else if (modelData.action === "maximize") terminal.toggleMaximize()
+                            }
+                        }
                     }
                 }
+            }
 
-                // Window controls
-                Row {
-                    spacing: 6
-                    
-                    // Minimize button
-                    Rectangle {
-                        width: 18
-                        height: 18
-                        radius: 9
-                        color: "#f9e2af"
-                        
-                        Text {
-                            anchors.centerIn: parent
-                            text: "−"
-                            color: "#11111b"
-                            font.pixelSize: 12
-                        }
-                        
-                        MouseArea {
-                            anchors.fill: parent
-                            hoverEnabled: true
-                            onClicked: terminal.minimize()
-                            onEntered: parent.opacity = 0.8
-                            onExited: parent.opacity = 1
-                        }
-                    }
-                    
-                    // Maximize button
-                    Rectangle {
-                        width: 18
-                        height: 18
-                        radius: 9
-                        color: "#a6e3a1"
-                        
-                        Text {
-                            anchors.centerIn: parent
-                            text: terminal.isMaximized ? "❐" : "□"
-                            color: "#11111b"
-                            font.pixelSize: 12
-                        }
-                        
-                        MouseArea {
-                            anchors.fill: parent
-                            hoverEnabled: true
-                            onClicked: terminal.toggleMaximize()
-                            onEntered: parent.opacity = 0.8
-                            onExited: parent.opacity = 1
-                        }
-                    }
-
-                    // Existing close button
-                    Rectangle {
-                        width: 18
-                        height: 18
-                        radius: 9
-                        color: "#f38ba8"
-                        anchors.verticalCenter: parent.verticalCenter
-
-                        Text {
-                            anchors.centerIn: parent
-                            text: "✖"
-                            color: "#11111b"
-                            font.pixelSize: 12
-                        }
-
-                        MouseArea {
-                            anchors.fill: parent
-                            hoverEnabled: true
-                            onClicked: terminal.closed()
-                            onEntered: parent.opacity = 0.8
-                            onExited: parent.opacity = 1
-                        }
+            MouseArea {
+                id: controlMouseArea
+                anchors.fill: parent
+                hoverEnabled: true
+                z: 1
+                property point clickPos: "0,0"
+                onPressed: {
+                    clickPos = Qt.point(mouse.x, mouse.y)
+                    terminal.parent.parent.bringToFront("Terminal")  // Add this line
+                }
+                onPositionChanged: {
+                    if (pressed) {
+                        var delta = Qt.point(mouse.x - clickPos.x, mouse.y - clickPos.y)
+                        terminal.x += delta.x
+                        terminal.y += delta.y
                     }
                 }
             }
