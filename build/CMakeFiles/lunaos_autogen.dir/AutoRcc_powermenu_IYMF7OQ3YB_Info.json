@@ -1,0 +1,20 @@
+{
+	"BUILD_DIR" : "/home/brynn/projects/lunaos-desktop/build/lunaos_autogen",
+	"CMAKE_BINARY_DIR" : "/home/brynn/projects/lunaos-desktop/build",
+	"CMAKE_CURRENT_BINARY_DIR" : "/home/brynn/projects/lunaos-desktop/build",
+	"CMAKE_CURRENT_SOURCE_DIR" : "/home/brynn/projects/lunaos-desktop",
+	"CMAKE_SOURCE_DIR" : "/home/brynn/projects/lunaos-desktop",
+	"GENERATOR" : "Unix Makefiles",
+	"INCLUDE_DIR" : "/home/brynn/projects/lunaos-desktop/build/lunaos_autogen/include",
+	"INPUTS" : [ "/home/brynn/projects/lunaos-desktop/system/powermenu/PowerMenu.qml" ],
+	"LOCK_FILE" : "/home/brynn/projects/lunaos-desktop/build/CMakeFiles/lunaos_autogen.dir/AutoRcc_powermenu_IYMF7OQ3YB_Lock.lock",
+	"MULTI_CONFIG" : false,
+	"OPTIONS" : [ "-name", "powermenu" ],
+	"OUTPUT_CHECKSUM" : "IYMF7OQ3YB",
+	"OUTPUT_NAME" : "qrc_powermenu.cpp",
+	"RCC_EXECUTABLE" : "/usr/lib/qt5/bin/rcc",
+	"RCC_LIST_OPTIONS" : [ "--list" ],
+	"SETTINGS_FILE" : "/home/brynn/projects/lunaos-desktop/build/CMakeFiles/lunaos_autogen.dir/AutoRcc_powermenu_IYMF7OQ3YB_Used.txt",
+	"SOURCE" : "/home/brynn/projects/lunaos-desktop/system/powermenu/powermenu.qrc",
+	"VERBOSITY" : 0
+}

@@ -1,0 +1,27 @@
+{
+	"BUILD_DIR" : "/home/brynn/projects/lunaos-desktop/build/lunaos_autogen",
+	"CMAKE_BINARY_DIR" : "/home/brynn/projects/lunaos-desktop/build",
+	"CMAKE_CURRENT_BINARY_DIR" : "/home/brynn/projects/lunaos-desktop/build",
+	"CMAKE_CURRENT_SOURCE_DIR" : "/home/brynn/projects/lunaos-desktop",
+	"CMAKE_SOURCE_DIR" : "/home/brynn/projects/lunaos-desktop",
+	"GENERATOR" : "Unix Makefiles",
+	"INCLUDE_DIR" : "/home/brynn/projects/lunaos-desktop/build/lunaos_autogen/include",
+	"INPUTS" : 
+	[
+		"/home/brynn/projects/lunaos-desktop/audio/error.wav",
+		"/home/brynn/projects/lunaos-desktop/audio/device-disconnect.wav",
+		"/home/brynn/projects/lunaos-desktop/audio/boot.wav",
+		"/home/brynn/projects/lunaos-desktop/audio/device-connect.wav",
+		"/home/brynn/projects/lunaos-desktop/audio/device.wav"
+	],
+	"LOCK_FILE" : "/home/brynn/projects/lunaos-desktop/build/CMakeFiles/lunaos_autogen.dir/AutoRcc_audio_PZONOMFGYT_Lock.lock",
+	"MULTI_CONFIG" : false,
+	"OPTIONS" : [ "-name", "audio" ],
+	"OUTPUT_CHECKSUM" : "PZONOMFGYT",
+	"OUTPUT_NAME" : "qrc_audio.cpp",
+	"RCC_EXECUTABLE" : "/usr/lib/qt5/bin/rcc",
+	"RCC_LIST_OPTIONS" : [ "--list" ],
+	"SETTINGS_FILE" : "/home/brynn/projects/lunaos-desktop/build/CMakeFiles/lunaos_autogen.dir/AutoRcc_audio_PZONOMFGYT_Used.txt",
+	"SOURCE" : "/home/brynn/projects/lunaos-desktop/audio/audio.qrc",
+	"VERBOSITY" : 0
+}

@@ -1,0 +1,23 @@
+{
+	"BUILD_DIR" : "/home/brynn/projects/lunaos-desktop/build/lunaos_autogen",
+	"CMAKE_BINARY_DIR" : "/home/brynn/projects/lunaos-desktop/build",
+	"CMAKE_CURRENT_BINARY_DIR" : "/home/brynn/projects/lunaos-desktop/build",
+	"CMAKE_CURRENT_SOURCE_DIR" : "/home/brynn/projects/lunaos-desktop",
+	"CMAKE_SOURCE_DIR" : "/home/brynn/projects/lunaos-desktop",
+	"GENERATOR" : "Unix Makefiles",
+	"INCLUDE_DIR" : "/home/brynn/projects/lunaos-desktop/build/lunaos_autogen/include",
+	"INPUTS" : 
+	[
+		"/home/brynn/projects/lunaos-desktop/system/context-menu/ContextMenu.qml"
+	],
+	"LOCK_FILE" : "/home/brynn/projects/lunaos-desktop/build/CMakeFiles/lunaos_autogen.dir/AutoRcc_contextmenu_IO7GU53HFX_Lock.lock",
+	"MULTI_CONFIG" : false,
+	"OPTIONS" : [ "-name", "contextmenu" ],
+	"OUTPUT_CHECKSUM" : "IO7GU53HFX",
+	"OUTPUT_NAME" : "qrc_contextmenu.cpp",
+	"RCC_EXECUTABLE" : "/usr/lib/qt5/bin/rcc",
+	"RCC_LIST_OPTIONS" : [ "--list" ],
+	"SETTINGS_FILE" : "/home/brynn/projects/lunaos-desktop/build/CMakeFiles/lunaos_autogen.dir/AutoRcc_contextmenu_IO7GU53HFX_Used.txt",
+	"SOURCE" : "/home/brynn/projects/lunaos-desktop/system/context-menu/contextmenu.qrc",
+	"VERBOSITY" : 0
+}

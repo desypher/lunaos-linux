@@ -1,0 +1,9 @@
+/home/brynn/projects/lunaos-desktop/build/CMakeFiles/lunaos.dir
+/home/brynn/projects/lunaos-desktop/build/CMakeFiles/edit_cache.dir
+/home/brynn/projects/lunaos-desktop/build/CMakeFiles/rebuild_cache.dir
+/home/brynn/projects/lunaos-desktop/build/CMakeFiles/list_install_components.dir
+/home/brynn/projects/lunaos-desktop/build/CMakeFiles/install.dir
+/home/brynn/projects/lunaos-desktop/build/CMakeFiles/install/local.dir
+/home/brynn/projects/lunaos-desktop/build/CMakeFiles/install/strip.dir
+/home/brynn/projects/lunaos-desktop/build/CMakeFiles/lunaos_autogen_timestamp_deps.dir
+/home/brynn/projects/lunaos-desktop/build/CMakeFiles/lunaos_autogen.dir
